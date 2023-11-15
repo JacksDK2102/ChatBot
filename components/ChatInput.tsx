@@ -54,6 +54,10 @@ function ChatInput({ chatId }: Props) {
 
     //Toast notification to say loading
     const notification = toast.loading("ChatBot is thinking...");
+    const chat_history = [{
+      role: "system",
+      content: "You are a customer assistant for a Restaurant that serves Asian Food. Your name is Sarah. You are designed to help customer in a friendly. If it is a complex queries, you will have to forward it to the administrator."
+    }]
 
     await fetch("/api/askQuestion", {
       method: "POST",
@@ -61,7 +65,7 @@ function ChatInput({ chatId }: Props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        prompt: input,
+        prompt: [chat_history && input],
         chatId,
         model,
         session,
